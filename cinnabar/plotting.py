@@ -31,6 +31,7 @@ def _master_plot(
     data_labels: list = [],
     axis_padding: float = 0.5,
     xy_lim: list = [],
+    xy_tick_frequency: Union[int, float] = 1, 
     font_sizes: dict = {"title": 12, "labels": 9, "other": 12},
     bootstrap_x_uncertainty: bool = False,
     bootstrap_y_uncertainty: bool = False,
@@ -89,6 +90,8 @@ def _master_plot(
         padding to add to maximum axis value and subtract from the minimum axis value
     xy_lim : list, default []
         contains the minimium and maximum values to use for the x and y axes. if specified, axis_padding is ignored
+    xy_tick_frequency : float or int, default = 1
+        tick frequency for x and y axes
     font_sizes : dict, default {"title": 12, "labels": 9, "other": 12}
         font sizes to use for the title ("title"), the data labels ("labels"), and the rest of the plot ("other")
     bootstrap_x_uncertainty : bool, default False
@@ -127,6 +130,10 @@ def _master_plot(
 
     plt.xlim(scale)
     plt.ylim(scale)
+
+    import math
+    plt.xticks(np.arange(math.ceil(ax_min), math.ceil(ax_max), xy_tick_frequency))
+    plt.yticks(np.arange(math.ceil(ax_min), math.ceil(ax_max), xy_tick_frequency))
 
     # plots x-axis and y-axis
     if origins:
